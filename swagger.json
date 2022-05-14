@@ -1,0 +1,149 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "Authorization endpoint",
+      "version": "1.0.0",
+      "title": "RUNNING DOCUMENTATION",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "name": "Tresor",
+        "email": "tresor@gmail.com"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "tags": [
+      {
+        "name": "comments",
+        "description": "Operations about comments"
+      },
+      {
+        "name": "Users",
+        "description": "Operations about the client"
+      }
+    ],
+    "paths": {
+      "/user/{id}": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get user info",
+          "description": "Get info info",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "type": "string",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Company info"
+            }
+          }
+        }
+      },
+      "/user": {
+          "post": {
+            "tags": ["Users"],
+            "summary": "user registration",
+            "description": "user registration",
+            "consumes": ["application/json"],
+            "produces": ["application/json"],
+            "parameters": [
+              {
+                "in": "body",
+                "name": "body",
+                "properties": {
+                  "fname": {
+                    "type": "string",
+                    "example": "Dawidi"
+                  },
+                  "lname": {
+                    "type": "string",
+                    "example": "Dawidi"
+                  },
+                   "password": {
+                    "type": "string",
+                    "example": "123"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "David123"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "ROLE_ADMIN"
+                  }
+                }
+              }
+            ],
+            "responses": {
+              "201": {
+                "description": "Provider registered."
+              }
+            }
+          },
+          "put": {
+              "tags": ["company"],
+              "summary": "Remove favorite company SHUMBUSHO",
+              "description": "Remove your favorite",
+              "consumes": ["application/json"],
+              "produces": ["application/json"],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "example": "rca0252but"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "ritco"
+                    }
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Removed from favorites."
+                }
+              }
+            }
+      },
+      "/api/v1/company/{id}": {
+          "delete": {
+            "tags": ["company"],
+            "summary": "Delete company SHUMBUSHO",
+            "description": "Delete company.",
+            "produces": ["application/json"],
+            "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "type": "string",
+                "required": true
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Company deleted."
+              },
+              "404": {
+                "description": "companies not found."
+              }
+            }
+          }
+        }
+    },
+    "externalDocs": {
+      "description": "Find out more about Swagger",
+      "url": "http://swagger.io"
+    }
+  }
+  

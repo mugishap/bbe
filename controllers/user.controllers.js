@@ -10,19 +10,21 @@ exports.userSignUp = async (req, res) => {
         const usernameExist = await usersSchema.findOne({
             username: req.body.username
         })
-        if (usernameExist.length != 0) {
+        if (usernameExist!=null) {
             return res.status(400).json({
                 success: false,
                 message: "Username already exists"
             })
         }
-        // console.log(req.body.);
+        //encrypting password
+        const hashedPassword = await bcrypt.hash(req.body.password,10);
+                // console.log(req.body.);
         const user = new usersSchema({
             fname: req.body.fname,
             lname: req.body.lname,
             username: req.body.username,
             role: req.body.role,
-            password: req.body.password
+            password: hashedPassword
         })
         await user.save();
         if (!user) {
@@ -35,7 +37,7 @@ exports.userSignUp = async (req, res) => {
 }
 
 //getting all users
-router.get("/", async (req, res) => {
+exports.getAllUsers=async (req, res) => {
     const users = await usersSchema.find();
     if (users.length == 0) {
         return res.send("no users found");
@@ -44,11 +46,11 @@ router.get("/", async (req, res) => {
         count: users.length,
         data: users
     })
-})
+}
 
 //getting user by id
 //getting all users
-exports.getAllUser = async (req, res) => {
+exports.getUser = async (req, res) => {
     console.log(req.params.id);
     const users = await usersSchema.findById(req.params.id)
     return res.status(200).json({
@@ -85,7 +87,7 @@ exports.userLogin = async (req, res) => {
     } = req.body;
 //finging user with provided username
 const user = await usersSchema.findOne({ username})
-if (user.length==0) {
+if (user==null) {
     return res.status(404).json({ 
         success:false,
         message:"Invalid username or password"
@@ -112,4 +114,16 @@ return res.status(200).json({
     token
 })  
 }
+}
+//getting current logged in user
+exports.getCurrentUser=async (req, res) => {
+    try {
+        const user = await usersSchema.findById(req.user.id)
+        console.log(req.user.id)
+        return res.status(200).json({
+            data: user
+        })
+    } catch (error) {
+        console.log(error);
+    }
 }

@@ -1,10 +1,14 @@
 const express = require('express');
-const { userSignUp, getAllUser, updateUser, deleteUser } = require('../controllers/user.controllers');
+const { userSignUp, getAllUsers, updateUser, deleteUser, getUser, userLogin, getCurrentUser} = require('../controllers/user.controllers');
+const { protect, role } = require('../middleware/auth');
 const router=express.Router();
 router
 .post("/",userSignUp)
-.get("/",getAllUser)
+.get("/",protect,role("ROLE_ADMIN","ROLE_SUPER"),getAllUsers)
 router
-.put("/:id",updateUser)
-.delete("/:id",deleteUser)
-module.exports.userRoutes=router
+.put("/:id",protect, updateUser)
+.delete("/:id",protect,deleteUser)
+.get("/:id",getUser)
+router.post("/login",userLogin)
+router.get("/loggedInUser",protect,getCurrentUser)
+module.exports.userRoutes=router;
