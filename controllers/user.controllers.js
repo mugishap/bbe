@@ -107,10 +107,13 @@ const token=jwt.sign({
     username:user.username,
     role:user.role
 },"dsdsds@$%trtdsdsdsd")
-//sending json web token 
-return res.status(200).json({ 
+//senging token into cookie
+res.cookie("token","Bearer "+token,{
+    // expires:new Date(Date.now()+86400000),
+    httpOnly:true
+})
+return res.status(200).json({
     success:true,
-    message:"Logged in successfully",
     token
 })  
 }

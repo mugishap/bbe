@@ -1,6 +1,6 @@
 const jwt=require('jsonwebtoken');
 exports.protect=async (req, res,next) => {
-const jsonwebtoken=req.headers.token;
+const jsonwebtoken=req.headers.token || req.cookies.token;
 if(!jsonwebtoken){
     return res.status(401).json({
         success:false,

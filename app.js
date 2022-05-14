@@ -1,11 +1,13 @@
 const express=require("express");
 const swaggerUi = require("swagger-ui-express");
-const bodyParser=require("body-parser");;
+const bodyParser=require("body-parser");
+const cookieParser=require("cookie-parser");
 const { dbConnection } = require("./models/connection");
 const { userRoutes } = require("./routes/user.routes");
 const PORT=2500;
 const app=express();
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.listen(PORT,()=>{
     console.log("Runining...........");
 })
